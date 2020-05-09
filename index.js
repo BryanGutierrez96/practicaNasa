@@ -7,14 +7,15 @@ function getAsteroids  (startDate,endDate,keyApi){
 
   asteroides.then((response) =>{
         return response.data
-    }).then((response) =>{
-        return response.element_count.data
     }).then ((asteroides)=>{
-        return axios.get(asteroides.near_earth_objects).then((response) => {
-            return { ...asteroides, near_earth_objects: response.data };
-        })
-    }).then((asteroide)=>{
-        console.log(asteroide.name);
+        const ast=  asteroides.near_earth_objects[startDate]
+        for( asteroide of ast ){
+            
+            console.log("Nombre del asteroide: ",asteroide.name);
+            console.log("Su diametro minimo fue: ", asteroide.estimated_diameter.kilometers.estimated_diameter_min+ "KM");
+            console.log("Su diametro maximo fue: ", asteroide.estimated_diameter.kilometers.estimated_diameter_max + "KM");
+            console.log("Era peligroso: ",asteroide.is_potentially_hazardous_asteroid);
+        }
     })
     .catch((error) => {
         console.log(error.response.data);
